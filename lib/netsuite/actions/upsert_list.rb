@@ -59,13 +59,16 @@ module NetSuite
       end
 
       def errors
-        response_hash.select { |h| h[:status] && h[:status][:status_detail] }.flat_map do |error_obj|
-          error_obj = error_obj[:status][:status_detail]
+        errors = response_hash.select { |h| h[:status] && h[:status][:status_detail] }.map do |obj|
+          error_obj = obj[:status][:status_detail]
           error_obj = [error_obj] if error_obj.class == Hash
-          error_obj.map do |error|
+          errors = error_obj.map do |error|
             NetSuite::Error.new(error)
           end
+
+          [obj[:base_ref][:@external_id], errors]
         end
+        Hash[errors]
       end
 
       def success?
