@@ -32,7 +32,6 @@ module NetSuite
       field :replace_all
 
       def initialize(attributes = {})
-        binding.pry
         initialize_from_attributes_hash(attributes)
       end
 
