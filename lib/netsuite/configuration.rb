@@ -185,11 +185,15 @@ module NetSuite
       attributes[:log]
     end
 
+    def logger=(value)
+      attributes[:logger] = value
+    end
+
     def logger(value = nil)
-      attributes[:logger] = if value.nil?
-        ::Logger.new((log && !log.empty?) ? log : $stdout)
+      if value
+        attrubutes[:logger] = value
       else
-        value
+        attributes[:logger] ||= ::Logger.new((log && !log.empty?) ? log : $stdout)
       end
     end
 

@@ -189,4 +189,11 @@ describe NetSuite::Configuration do
     end
   end
 
+  describe '#logger=' do
+    it 'accepts a logger instance' do
+      logger = Logger.new('/dev/null')
+      config.logger = logger
+      expect(config.logger).to eq(logger)
+    end
+  end
 end
