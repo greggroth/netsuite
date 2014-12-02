@@ -25,6 +25,7 @@ module NetSuite
     autoload :TranInvt,       'netsuite/namespaces/tran_invt'
     autoload :TranSales,      'netsuite/namespaces/tran_sales'
     autoload :SetupCustom,    'netsuite/namespaces/setup_custom'
+    autoload :ListEmp,        'netsuite/namespaces/list_emp'
     autoload :ListMkt,        'netsuite/namespaces/list_mkt'
   end
 
@@ -84,6 +85,8 @@ module NetSuite
     autoload :CustomRecord,                     'netsuite/records/custom_record'
     autoload :CustomRecordRef,                  'netsuite/records/custom_record_ref'
     autoload :CustomRecordType,                 'netsuite/records/custom_record_type'
+    autoload :CustomListCustomValue,            'netsuite/records/custom_list_custom_value'
+    autoload :CustomListCustomValueList,        'netsuite/records/custom_list_custom_value_list'
     autoload :Customer,                         'netsuite/records/customer'
     autoload :CustomerAddressbook,              'netsuite/records/customer_addressbook'
     autoload :CustomerAddressbookList,          'netsuite/records/customer_addressbook_list'
@@ -108,6 +111,7 @@ module NetSuite
     autoload :DepositCashBackList,              'netsuite/records/deposit_cash_back_list'
     autoload :DiscountItem,                     'netsuite/records/discount_item'
     autoload :Duration,                         'netsuite/records/duration'
+    autoload :Employee,                         'netsuite/records/employee'
     autoload :File,                             'netsuite/records/file'
     autoload :InventoryAssignment,              'netsuite/records/inventory_assignment'
     autoload :InventoryAssignmentList,          'netsuite/records/inventory_assignment_list'
@@ -135,6 +139,7 @@ module NetSuite
     autoload :MatrixOptionList,                 'netsuite/records/matrix_option_list'
     autoload :MemberList,                       'netsuite/records/member_list'
     autoload :NonInventorySaleItem,             'netsuite/records/non_inventory_sale_item'
+    autoload :Partner,                          'netsuite/records/partner'
     autoload :PaymentMethod,                    'netsuite/records/payment_method'
     autoload :PhoneCall,                        'netsuite/records/phone_call'
     autoload :PricingMatrix,                    'netsuite/records/pricing_matrix'
