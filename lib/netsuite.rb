@@ -39,6 +39,7 @@ module NetSuite
     autoload :Records,    'netsuite/support/records'
     autoload :Requests,   'netsuite/support/requests'
     autoload :SearchResult, 'netsuite/support/search_result'
+    autoload :Sublist,    'netsuite/support/sublist'
   end
 
   module Actions
