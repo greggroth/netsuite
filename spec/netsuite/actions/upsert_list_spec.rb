@@ -94,9 +94,9 @@ describe NetSuite::Actions::UpsertList do
 
       it 'constructs error objects' do
         response = NetSuite::Actions::UpsertList.call(customers)
-        expect(response.errors.first.code).to eq('USER_ERROR')
-        expect(response.errors.first.message).to eq('Please enter value(s) for: Item')
-        expect(response.errors.first.type).to eq('ERROR')
+        expect(response.errors.fetch('ext1').first.code).to eq('USER_ERROR')
+        expect(response.errors.fetch('ext1').first.message).to eq('Please enter value(s) for: Item')
+        expect(response.errors.fetch('ext1').first.type).to eq('ERROR')
       end
     end
   end
