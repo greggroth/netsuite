@@ -8,7 +8,7 @@ describe NetSuite::Records::Customer do
       :access_role, :account_number, :aging, :alt_email, :alt_name, :alt_phone, :balance, :bill_pay,
       :buying_reason, :buying_time_frame, :campaign_category, :click_stream, :comments, :company_name,
       :consol_aging, :consol_balance, :consol_days_overdue, :consol_deposit_balance, :consol_overdue_balance,
-      :consol_unbilled_orders, :contact_roles_list, :contrib_pct, :credit_cards_list, :credit_hold_override, :credit_limit,
+      :consol_unbilled_orders, :contrib_pct, :credit_cards_list, :credit_hold_override, :credit_limit,
       :currency, :currency_list, :date_created, :days_overdue, :default_address,
       :deposit_balance, :download_list, :email, :email_preference, :email_transactions, :end_date, :entity_id,
       :estimated_budget, :fax, :fax_transactions, :first_name, :first_visit, :give_access, :global_subscription_status,
@@ -22,7 +22,7 @@ describe NetSuite::Records::Customer do
       :territory, :third_party_acct, :third_party_country, :third_party_zipcode, :title, :unbilled_orders, :url,
       :vat_reg_number, :visits, :web_lead
     ].each do |field|
-      customer.should have_field(field)
+      expect(customer).to have_field(field)
     end
   end
 
@@ -30,9 +30,11 @@ describe NetSuite::Records::Customer do
     [
       :custom_form, :entity_status, :partner
     ].each do |record_ref|
-      customer.should have_record_ref(record_ref)
+      expect(customer).to have_record_ref(record_ref)
     end
   end
+
+  # TODO test contact_roles_list
 
   describe '#addressbook_list' do
     it 'can be set from attributes' do
@@ -52,14 +54,14 @@ describe NetSuite::Records::Customer do
           :zip              => '90007'
         }
       }
-      customer.addressbook_list.should be_kind_of(NetSuite::Records::CustomerAddressbookList)
-      customer.addressbook_list.addressbooks.length.should eql(1)
+      expect(customer.addressbook_list).to be_kind_of(NetSuite::Records::CustomerAddressbookList)
+      expect(customer.addressbook_list.addressbooks.length).to eql(1)
     end
 
     it 'can be set from a CustomerAddressbookList object' do
       customer_addressbook_list = NetSuite::Records::CustomerAddressbookList.new
       customer.addressbook_list = customer_addressbook_list
-      customer.addressbook_list.should eql(customer_addressbook_list)
+      expect(customer.addressbook_list).to eql(customer_addressbook_list)
     end
   end
 
@@ -72,14 +74,14 @@ describe NetSuite::Records::Customer do
         }
       }
       customer.custom_field_list = attributes
-      customer.custom_field_list.should be_kind_of(NetSuite::Records::CustomFieldList)
-      customer.custom_field_list.custom_fields.length.should eql(1)
+      expect(customer.custom_field_list).to be_kind_of(NetSuite::Records::CustomFieldList)
+      expect(customer.custom_field_list.custom_fields.length).to eql(1)
     end
 
     it 'can be set from a CustomFieldList object' do
       custom_field_list = NetSuite::Records::CustomFieldList.new
       customer.custom_field_list = custom_field_list
-      customer.custom_field_list.should eql(custom_field_list)
+      expect(customer.custom_field_list).to eql(custom_field_list)
     end
   end
 
@@ -88,10 +90,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => true, :body => { :is_person => true }) }
 
       it 'returns a Customer instance populated with the data from the response object' do
-        NetSuite::Actions::Get.should_receive(:call).with([NetSuite::Records::Customer, {:external_id => 1}], {}).and_return(response)
+        expect(NetSuite::Actions::Get).to receive(:call).with([NetSuite::Records::Customer, {:external_id => 1}], {}).and_return(response)
         customer = NetSuite::Records::Customer.get(:external_id => 1)
-        customer.should be_kind_of(NetSuite::Records::Customer)
-        customer.is_person.should be_truthy
+        expect(customer).to be_kind_of(NetSuite::Records::Customer)
+        expect(customer.is_person).to be_truthy
       end
     end
 
@@ -99,10 +101,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => false, :body => {}) }
 
       it 'raises a RecordNotFound exception' do
-        NetSuite::Actions::Get.should_receive(:call).with([NetSuite::Records::Customer, {:external_id => 1}], {}).and_return(response)
-        lambda {
+        expect(NetSuite::Actions::Get).to receive(:call).with([NetSuite::Records::Customer, {:external_id => 1}], {}).and_return(response)
+        expect {
           NetSuite::Records::Customer.get(:external_id => 1)
-        }.should raise_error(NetSuite::RecordNotFound,
+        }.to raise_error(NetSuite::RecordNotFound,
           /NetSuite::Records::Customer with OPTIONS=(.*) could not be found/)
       end
     end
@@ -115,10 +117,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => true, :body => { :internal_id => '1' }) }
 
       it 'returns true' do
-        NetSuite::Actions::Add.should_receive(:call).
+        expect(NetSuite::Actions::Add).to receive(:call).
             with([customer], {}).
             and_return(response)
-        customer.add.should be_truthy
+        expect(customer.add).to be_truthy
       end
     end
 
@@ -126,10 +128,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => false, :body => {}) }
 
       it 'returns false' do
-        NetSuite::Actions::Add.should_receive(:call).
+        expect(NetSuite::Actions::Add).to receive(:call).
             with([customer], {}).
             and_return(response)
-        customer.add.should be_falsey
+        expect(customer.add).to be_falsey
       end
     end
   end
@@ -139,10 +141,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => true, :body => { :internal_id => '1' }) }
 
       it 'returns true' do
-        NetSuite::Actions::Delete.should_receive(:call).
+        expect(NetSuite::Actions::Delete).to receive(:call).
             with([customer], {}).
             and_return(response)
-        customer.delete.should be_truthy
+        expect(customer.delete).to be_truthy
       end
     end
 
@@ -150,10 +152,10 @@ describe NetSuite::Records::Customer do
       let(:response) { NetSuite::Response.new(:success => false, :body => {}) }
 
       it 'returns false' do
-        NetSuite::Actions::Delete.should_receive(:call).
+        expect(NetSuite::Actions::Delete).to receive(:call).
             with([customer], {}).
             and_return(response)
-        customer.delete.should be_falsey
+        expect(customer.delete).to be_falsey
       end
     end
   end
@@ -162,7 +164,7 @@ describe NetSuite::Records::Customer do
     let(:customer) { NetSuite::Records::Customer.new(:entity_id => 'TEST CUSTOMER', :is_person => true) }
 
     it 'returns a hash of attributes that can be used in a SOAP request' do
-      customer.to_record.should eql({
+      expect(customer.to_record).to eql({
         'listRel:entityId' => 'TEST CUSTOMER',
         'listRel:isPerson' => true
       })
@@ -171,7 +173,7 @@ describe NetSuite::Records::Customer do
 
   describe '#record_type' do
     it 'returns a string type for the record to be used in a SOAP request' do
-      customer.record_type.should eql('listRel:Customer')
+      expect(customer.record_type).to eql('listRel:Customer')
     end
   end
 

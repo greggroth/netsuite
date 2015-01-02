@@ -40,6 +40,7 @@ module NetSuite
     autoload :Requests,   'netsuite/support/requests'
     autoload :SearchResult, 'netsuite/support/search_result'
     autoload :Sublist,    'netsuite/support/sublist'
+    autoload :Country,      'netsuite/support/country'
   end
 
   module Actions
@@ -102,6 +103,8 @@ module NetSuite
     autoload :CustomerRefundDepositList,        'netsuite/records/customer_refund_deposit_list'
     autoload :ContactList,                      'netsuite/records/contact_list'
     autoload :Contact,                          'netsuite/records/contact'
+    autoload :ContactAccessRoles,               'netsuite/records/contact_access_roles'
+    autoload :ContactAccessRolesList,           'netsuite/records/contact_access_roles_list'
     autoload :Department,                       'netsuite/records/department'
     autoload :Deposit,                          'netsuite/records/deposit'
     autoload :DepositPayment,                   'netsuite/records/deposit_payment'
@@ -148,6 +151,7 @@ module NetSuite
     autoload :RecordRef,                        'netsuite/records/record_ref'
     autoload :RecordRefList,                    'netsuite/records/record_ref_list'
     autoload :RevRecTemplate,                   'netsuite/records/rev_rec_template'
+    autoload :RoleList,                         'netsuite/records/role_list'
     autoload :SalesOrder,                       'netsuite/records/sales_order'
     autoload :SalesOrderItem,                   'netsuite/records/sales_order_item'
     autoload :SalesOrderItemList,               'netsuite/records/sales_order_item_list'
