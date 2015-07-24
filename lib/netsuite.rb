@@ -62,6 +62,7 @@ module NetSuite
 
   module Records
     autoload :AssemblyItem,                     'netsuite/records/assembly_item'
+    autoload :AssemblyBuild,                    'netsuite/records/assembly_build'
     autoload :Account,                          'netsuite/records/account'
     autoload :AccountingPeriod,                 'netsuite/records/accounting_period'
     autoload :BaseRefList,                      'netsuite/records/base_ref_list'
