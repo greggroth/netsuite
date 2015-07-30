@@ -14,7 +14,11 @@ module NetSuite
         @custom_fields_assoc = Hash.new
         custom_fields.each do |custom_field|
           reference_id = custom_field.script_id || custom_field.internal_id
-          @custom_fields_assoc[reference_id.to_sym] = custom_field
+
+          # not all custom fields have an id; https://github.com/NetSweet/netsuite/issues/182
+          if reference_id
+            @custom_fields_assoc[reference_id.to_sym] = custom_field
+          end
         end
       end
 
@@ -71,6 +75,9 @@ module NetSuite
               "platformCore:value" => custom_field_value,
               '@xsi:type' => custom_field.type
             }
+
+            # TODO this is broken in > 2013_1; need to conditionally change the synax here
+            # if NetSuite::Configuration.api_version < "2013_2"
 
             if custom_field.internal_id
               base['@internalId'] = custom_field.internal_id

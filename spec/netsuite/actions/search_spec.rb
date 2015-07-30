@@ -7,10 +7,11 @@ describe NetSuite::Actions::Search do
   it "handles custom auth credentials" do
     allow(NetSuite::Configuration).to receive(:connection).and_return(double().as_null_object)
 
-    NetSuite::Records::Customer.search({}, {
+    credentials = {
       email: 'fake@domain.com',
       password: 'fake'
-    })
+    }
+    NetSuite::Records::Customer.search({}, credentials)
 
     expect(NetSuite::Configuration).to have_received(:connection).with({:soap_header=>{
       "platformMsgs:passport"=>{
@@ -18,7 +19,7 @@ describe NetSuite::Actions::Search do
         "platformCore:password"=>"fake",
         "platformCore:account"=>"1234",
         "platformCore:role"=>{:@internalId=>"3"}
-      }, "platformMsgs:SearchPreferences"=>{}}}
+      }, "platformMsgs:SearchPreferences"=>{}}}, credentials
     )
   end
 
@@ -156,6 +157,7 @@ describe NetSuite::Actions::Search do
       })
 
       expect(search.results.size).to eq(2)
+      expect(search.current_page).to eq(1)
       expect(search.results.first.alt_name).to eq('A Awesome Name')
       expect(search.results.last.email).to eq('alessawesome@gmail.com')
     end
